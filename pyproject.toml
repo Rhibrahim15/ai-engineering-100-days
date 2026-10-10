@@ -1,0 +1,6 @@
+﻿[project]
+name = "ai-engineering-100-days"
+version = "0.1.0"
+description = "Evidence-based 100-day AI engineering learning journey"
+requires-python = ">=3.12"
+dependencies = []
