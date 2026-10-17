@@ -1,0 +1,17 @@
+
+{
+  "days": {
+    "1": {
+      "status": "In progress",
+      "evidence": [
+        "day01/code/baseline.py",
+        "day01/code/test_baseline.py"
+      ],
+      "verification": {
+        "tests_passed": false,
+        "reflection_reviewed": false,
+        "human_verified": false
+      }
+    }
+  }
+}

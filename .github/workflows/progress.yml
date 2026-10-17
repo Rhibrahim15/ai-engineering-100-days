@@ -1,0 +1,46 @@
+
+name: Update AI Engineering Progress
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-progress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Day 01 tests
+        run: python -m unittest discover -s day01/code -p "test_*.py" -v
+
+      - name: Check progress generator syntax
+        run: python -m py_compile scripts/update_progress.py
+
+      - name: Generate progress reports
+        run: python scripts/update_progress.py
+
+      - name: Validate generated JSON
+        run: python -m json.tool progress.json > /dev/null
+
+      - name: Commit updated reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PROGRESS.md progress.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update generated progress reports"
+            git push
+          fi
